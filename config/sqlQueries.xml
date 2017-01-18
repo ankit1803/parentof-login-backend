@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mappers">
+
+    <!--        Otp           -->
+
+    <insert id="insertOtp" parameterType="Otp">
+        insert into otp (app_id, user_id, token, expiry_time)
+        values
+        (#{app_id}, #{user_id}, #{token}, #{expiry_time})
+    </insert>
+
+    <select id="getOtpById" parameterType="java.util.Map" resultType="Otp">
+        select * from otp where app_id=#{app_id} and user_id=#{user_id};
+    </select>
+
+    <update id="updateOtp" parameterType="Otp">
+        update otp set
+        token=#{token}, expiry_time=#{expiry_time}
+        where app_id=#{app_id} and user_id=#{user_id};
+    </update>
+
+
+    <!--        MailOtp           -->
+
+    <insert id="insertMailOtp" parameterType="MailOtp">
+        insert into mail_otp (email, app_id, user_id, token, expiry_time)
+        values
+        (#{email}, #{app_id}, #{user_id}, #{token}, #{expiry_time})
+    </insert>
+
+    <select id="getMailOtpById" parameterType="java.util.Map" resultType="MailOtp">
+        select * from mail_otp where email=#{email} and app_id=#{app_id} and user_id=#{user_id};
+    </select>
+
+    <update id="updateMailOtp" parameterType="MailOtp">
+        update mail_otp set
+        token=#{token}, expiry_time=#{expiry_time}
+        where email=#{email} and app_id=#{app_id} and user_id=#{user_id};
+    </update>
+
+    <insert id="insertUser" parameterType="User">
+        insert into users (username, firstname, lastname, email, address, area, city, state, country)
+        values
+        (#{username}, #{firstname}, #{lastname}, #{email}, #{address}, #{area}, #{city}, #{state}, #{country})
+    </insert>
+
+    <select id="getUser" parameterType="java.lang.String" resultType="User">
+        select * from users where username=#{username};
+    </select>
+
+    <select id="getUserByMailApp" parameterType="java.util.Map" resultType="User">
+        select * from users where email=#{email};
+    </select>
+
+</mapper>
